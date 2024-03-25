@@ -14,11 +14,15 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        stage('Packaging the code') {
+        stage('Testing the code') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+      stage('Packaging the code') {
             steps {
                 sh 'mvn package'
             }
         }
-
     }
 }
