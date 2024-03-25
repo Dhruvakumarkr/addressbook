@@ -4,7 +4,7 @@ pipeline {
         maven 'mymaven'
     }
     stages {
-        stage('Fetching Code from Git-Hub') {
+        stage('Fetching Code from Git') {
             steps {
                 git branch: 'master', url: 'https://github.com/Dhruvakumarkr/addressbook.git'
             }
