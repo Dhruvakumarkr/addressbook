@@ -9,7 +9,7 @@ pipeline {
         TOMCAT_HOST = 'localhost' // Tomcat host
         TOMCAT_PORT = '8082' // Tomcat port
         WAR_FILE_PATH = '/var/lib/jenkins/workspace/my-pipeline/target/addressbook-2.0.war' // Path to your WAR file
-        CONTEXT_PATH = '/addressbook-2.0' // Context path where you want to deploy your application
+        CONTEXT_PATH = null // Context path where you want to deploy your application
     }
     stages {
         stage('Fetching Code from Git') {
