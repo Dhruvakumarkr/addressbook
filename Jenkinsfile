@@ -24,16 +24,25 @@ pipeline {
                 sh 'mvn package'
             }
         }
-    }
-    post {
-   	 always {
-   	 step([$class: 'JacocoPublisher',
-   	   	execPattern: 'target/*.exec',
-   	   	classPattern: 'target/classes',
-   	   	sourcePattern: 'src/main/java',
-   	   	exclusionPattern: 'src/test*'
-   	 ])
-   	 }   
-    	}
+          
 
+        
+    }
+    environment {
+        TOMCAT_MANAGER_USERNAME = 'manager' // Tomcat Manager username
+        TOMCAT_MANAGER_PASSWORD = 'manager' // Tomcat Manager password
+        TOMCAT_HOST = 'localhost' // Tomcat host
+        TOMCAT_PORT = '8082' // Tomcat port
+        WAR_FILE_PATH = '/var/lib/jenkins/workspace/my-pipeline/target/addressbook-2.0.war' // Path to your WAR file
+        CONTEXT_PATH = '/addressbook-2.0' // Context path where you want to deploy your application
+    }
+        stage('Deploy WAR file') {
+            steps {
+                script {
+                    // Use curl to deploy the WAR file to Tomcat Manager
+                    sh "curl -v -u ${TOMCAT_MANAGER_USERNAME}:${TOMCAT_MANAGER_PASSWORD} --upload-file ${WAR_FILE_PATH} http://${TOMCAT_HOST}:${TOMCAT_PORT}/manager/text/deploy?path=/${CONTEXT_PATH}"
+                }
+            }
+        }
+    
 }
